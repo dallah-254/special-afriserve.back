@@ -6,17 +6,44 @@ const cors = require('cors');
 const { body, validationResult } = require('express-validator');
 require('dotenv').config();
 
+const express = require("express");
+const cors = require("cors");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'Africonnect-secret-key-2024';
+const JWT_SECRET = process.env.JWT_SECRET || "Africonnect-secret-key-2024";
 
-// Enhanced Middleware
+// ✅ Enhanced Middleware
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://127.0.0.1:5501', 'http://localhost:5501'],
+    origin: [
+        "http://localhost:8080",  // ✅ frontend server
+        "http://localhost:3000", 
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://127.0.0.1:5501",
+        "http://localhost:5501"
+    ],
     credentials: true
 }));
-app.use(express.json({ limit: '10mb' }));
+
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
+
+// ✅ Example routes (you already have your own, just showing structure)
+app.get("/api/roles", (req, res) => {
+    res.json(["admin", "user", "guest"]);
+});
+
+app.post("/api/register", (req, res) => {
+    const { name, email } = req.body;
+    res.json({ message: `User ${name} (${email}) registered successfully!` });
+});
+
+// ✅ Start server
+app.listen(PORT, () => {
+    console.log(`Backend running on http://localhost:${PORT}`);
+});
+
 
 // MongoDB Connection with multiple databases
 const mainDB = mongoose.createConnection(process.env.MONGODB_URI || 'mongodb://localhost:27017/Afriserve', {
