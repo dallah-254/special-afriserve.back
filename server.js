@@ -12,14 +12,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'Africonnect-secret-key-2024';
 
 // Enhanced Middleware
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500', 'http://127.0.0.1:5501', 'http://localhost:5501'],
     credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection with multiple databases
-const mainDB = mongoose.createConnection(process.env.MONGODB_URI || 'mongodb://localhost:27017/Africonnect', {
+const mainDB = mongoose.createConnection(process.env.MONGODB_URI || 'mongodb://localhost:27017/Afriserve', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
